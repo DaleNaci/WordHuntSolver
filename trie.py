@@ -23,3 +23,14 @@ class Trie:
             current = current[c]
         
         return "#" in current
+
+
+    def starts_with(self, prefix):
+        current = self.child
+
+        for c in prefix:
+            if c not in current:
+                return False
+            current = current[c]
+
+        return True

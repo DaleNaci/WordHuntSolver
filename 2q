@@ -1,0 +1,28 @@
+import json
+import time
+
+from pprint import pprint
+
+from trie import Trie
+
+
+with open("words_dictionary.json", "r") as json_words:
+    data = json.load(json_words)
+
+trie = Trie()
+board = []
+
+
+def load_trie():
+    for word in data.keys():
+        trie.insert(word)
+
+
+def fill_board():
+    for i in range(4):
+        row = input()
+        board.append([c for c in row])
+    pprint(board)
+
+
+fill_board()
