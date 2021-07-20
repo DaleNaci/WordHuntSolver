@@ -1,4 +1,5 @@
 import time
+import turtle
 
 import keyboard
 from pprint import pprint
@@ -84,4 +85,5 @@ word_list = list(set(word_list))
 word_list.sort(key=lambda s: len(s), reverse=True)
 
 for word in word_list:
-   input(word)
+   screen = turtle.getscreen()
+   t = turtle.Turtle()
