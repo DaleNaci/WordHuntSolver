@@ -8,7 +8,7 @@ from trie import Trie
 
 
 data = []
-with open("corncob_lowercase.txt", "r") as f:
+with open("data/corncob_lowercase.txt", "r") as f:
     for line in f.readlines():
         data.append(line.strip())
 
