@@ -1,11 +1,11 @@
 import time
-import turtle
 
 import keyboard
 from pprint import pprint
 
 from trie import Trie
-
+from word import Word
+from letter import Letter
 
 data = []
 with open("data/corncob_lowercase.txt", "r") as f:
@@ -35,17 +35,20 @@ def fill_board():
 # vc = visited coords
 def f(x, y, v, vc):
     v = v.copy()
-    v.append(board[y][x])
+    lttr = Letter(board[y][x], x, y)
+    v.append(lttr)
 
     vc = vc.copy()
     vc.append([x, y])
 
-    word = "".join(v)
+    w = Word()
+    for lttr in v:
+        w.add_letter(lttr)
     
-    if not trie.starts_with(word):
+    if not trie.starts_with(w.get_word()):
         return
-    elif len(word) >= 3 and trie.search(word):
-        word_list.append(word)
+    elif len(w.get_word()) >= 3 and trie.search(w.get_word()):
+        word_list.append(w.get_word())
 
     if x != 3 and [x+1, y] not in vc:
         f(x+1, y, v, vc)
@@ -85,5 +88,6 @@ word_list = list(set(word_list))
 word_list.sort(key=lambda s: len(s), reverse=True)
 
 for word in word_list:
-   screen = turtle.getscreen()
-   t = turtle.Turtle()
+    input(word)
+    #screen = turtle.getscreen()
+   #t = turtle.Turtle()
