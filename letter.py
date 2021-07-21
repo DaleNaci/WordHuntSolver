@@ -10,4 +10,4 @@ class Letter:
 
 
     def get_coords(self):
-        return (x, y)
+        return (self.x, self.y)

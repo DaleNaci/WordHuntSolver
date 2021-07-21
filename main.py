@@ -1,4 +1,5 @@
 import time
+import turtle
 
 import keyboard
 from pprint import pprint
@@ -6,6 +7,7 @@ from pprint import pprint
 from trie import Trie
 from word import Word
 from letter import Letter
+
 
 data = []
 with open("data/corncob_lowercase.txt", "r") as f:
@@ -48,7 +50,7 @@ def f(x, y, v, vc):
     if not trie.starts_with(w.get_word()):
         return
     elif len(w.get_word()) >= 3 and trie.search(w.get_word()):
-        word_list.append(w.get_word())
+        word_list.append(w)
 
     if x != 3 and [x+1, y] not in vc:
         f(x+1, y, v, vc)
@@ -83,11 +85,71 @@ fill_board()
 load_trie()
 find_words()
 
-word_list = list(set(word_list))
 
-word_list.sort(key=lambda s: len(s), reverse=True)
+word_list = sorted(word_list, key=lambda w: len(w.get_word()), reverse=True)
+
+turtle.screensize(canvwidth=500, canvheight=500, bg="black")
+turtle.speed(0)
+#turtle.done()
+screen = turtle.getscreen()
+screen.tracer(0)
+t = turtle.Turtle()
+t.color("white")
+
+
+def draw_circle(r):
+    t.up()
+    start_pos = t.position()
+    t.sety(t.position()[1] - r)
+    t.down()
+    t.circle(r)
+    t.up()
+    t.goto(start_pos)
+    t.down()
+
+finished_words = []
 
 for word in word_list:
-    input(word)
-    #screen = turtle.getscreen()
-   #t = turtle.Turtle()
+    if word.get_word() in finished_words:
+        continue
+    else:
+        finished_words.append(word.get_word())
+
+    first_lttr = True
+    #input(word.get_word())
+    t.up()
+    for lttr in word.letters:
+        x, y = lttr.get_coords()
+
+        t.goto((x-1.5) * 100, (1.5-y) * 100)
+
+        #print(f"{x}, {y}\t{(x-1.5) * 100}, {(1.5-y) * 100}")
+
+        if first_lttr:
+            first_lttr = False
+            t.clear()
+
+            start_pos = t.position()
+        
+            for x in range(-150, 250, 100):
+                for y in range(-150, 250, 100):
+                    t.color("red")
+                    t.up()
+                    t.goto(x, y)
+                    t.down()
+                    draw_circle(5)
+                    t.color("white")
+            
+            t.up()
+            t.goto(start_pos)
+            t.down()
+
+            t.color("green")
+            draw_circle(15)
+            t.color("white")
+
+    screen.update()
+
+    input(word.get_word())
+
+        
