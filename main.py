@@ -10,7 +10,7 @@ from letter import Letter
 
 
 data = []
-with open("data/corncob_lowercase.txt", "r") as f:
+with open("data/2of12inf.txt", "r") as f:
     for line in f.readlines():
         data.append(line.strip())
 
@@ -46,7 +46,7 @@ def f(x, y, v, vc):
     w = Word()
     for lttr in v:
         w.add_letter(lttr)
-    
+
     if not trie.starts_with(w.get_word()):
         return
     elif len(w.get_word()) >= 3 and trie.search(w.get_word()):
@@ -70,7 +70,7 @@ def f(x, y, v, vc):
         f(x-1, y+1, v, vc)
     if x != 0 and y != 0 and [x-1, y-1] not in vc:
         f(x-1, y-1, v, vc)
-    
+
 
 
 
@@ -90,6 +90,7 @@ word_list = sorted(word_list, key=lambda w: len(w.get_word()), reverse=True)
 
 turtle.screensize(canvwidth=500, canvheight=500, bg="black")
 turtle.speed(0)
+turtle.hideturtle()
 #turtle.done()
 screen = turtle.getscreen()
 screen.tracer(0)
@@ -130,7 +131,7 @@ for word in word_list:
             t.clear()
 
             start_pos = t.position()
-        
+
             for x in range(-150, 250, 100):
                 for y in range(-150, 250, 100):
                     t.color("red")
@@ -139,7 +140,7 @@ for word in word_list:
                     t.down()
                     draw_circle(5)
                     t.color("white")
-            
+
             t.up()
             t.goto(start_pos)
             t.down()
@@ -151,5 +152,3 @@ for word in word_list:
     screen.update()
 
     input(word.get_word())
-
-        
